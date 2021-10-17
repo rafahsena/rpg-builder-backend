@@ -1,10 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { IsNumber, IsString } from 'class-validator';
-import { CreateCharacterDto } from './create-character.dto';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateCharacterDto extends PartialType(CreateCharacterDto) {
+export class UpdateCharacterDto {
+  @IsOptional()
   @IsString()
   name?: string;
+  @IsOptional()
   @IsNumber()
   level?: number;
 }
