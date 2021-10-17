@@ -26,10 +26,18 @@ export class CharactersService {
     where: Prisma.CharacterWhereUniqueInput,
     data: Prisma.CharacterUpdateInput,
   ) {
-    return this.prisma.character.update({ where, data });
+    const character = await this.prisma.character.update({ where, data });
+    if (!character) {
+      throw new NotFoundException();
+    }
+    return character;
   }
 
   async remove(where: Prisma.CharacterWhereUniqueInput) {
-    return this.prisma.character.delete({ where });
+    const character = await this.prisma.character.delete({ where });
+    if (!character) {
+      throw new NotFoundException();
+    }
+    return character;
   }
 }
