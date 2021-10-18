@@ -1,6 +1,7 @@
 import { Character, Prisma } from '@prisma/client';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { EntityNotFoundError } from 'src/exceptions/EntityNotFound';
 
 @Injectable()
 export class CharactersService {
@@ -17,7 +18,7 @@ export class CharactersService {
   async findOne(where: Prisma.CharacterWhereUniqueInput) {
     const character = await this.prisma.character.findUnique({ where });
     if (!character) {
-      throw new NotFoundException();
+      throw new EntityNotFoundError('This character does not exists.');
     }
     return character;
   }
@@ -28,7 +29,7 @@ export class CharactersService {
   ) {
     const character = await this.prisma.character.update({ where, data });
     if (!character) {
-      throw new NotFoundException();
+      throw new EntityNotFoundError('This character does not exists.');
     }
     return character;
   }
@@ -36,7 +37,7 @@ export class CharactersService {
   async remove(where: Prisma.CharacterWhereUniqueInput) {
     const character = await this.prisma.character.delete({ where });
     if (!character) {
-      throw new NotFoundException();
+      throw new EntityNotFoundError('This character does not exists.');
     }
     return character;
   }
