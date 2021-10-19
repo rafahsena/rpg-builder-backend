@@ -5,7 +5,9 @@ import { NotFoundInterceptor } from './interceptors/not-found.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+  );
   app.useGlobalInterceptors(new NotFoundInterceptor());
   await app.listen(3000);
 }
