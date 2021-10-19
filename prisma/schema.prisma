@@ -13,5 +13,5 @@ generator client {
 model Character {
   id    Int    @id @default(autoincrement())
   name  String
-  level Int?
+  level Int?   @default(1)
 }
