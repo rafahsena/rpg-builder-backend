@@ -11,34 +11,34 @@ export class CharactersService {
     return this.prisma.character.create({ data });
   }
 
-  async findAll(where: Prisma.CharacterWhereInput) {
-    return this.prisma.character.findMany({ where });
+  async findAll() {
+    return this.prisma.character.findMany();
   }
 
-  async findOne(where: Prisma.CharacterWhereUniqueInput) {
-    const character = await this.prisma.character.findUnique({ where });
-    if (!character) {
+  async findOne(id: number) {
+    try {
+      return await this.prisma.character.findUnique({ where: { id } });
+    } catch (e) {
       throw new EntityNotFoundError('This character does not exists.');
     }
-    return character;
   }
 
-  async update(
-    where: Prisma.CharacterWhereUniqueInput,
-    data: Prisma.CharacterUpdateInput,
-  ) {
-    const character = await this.prisma.character.update({ where, data });
-    if (!character) {
+  async update(id: number, data: Prisma.CharacterUpdateInput) {
+    try {
+      return await this.prisma.character.update({
+        where: { id },
+        data,
+      });
+    } catch (e) {
       throw new EntityNotFoundError('This character does not exists.');
     }
-    return character;
   }
 
-  async remove(where: Prisma.CharacterWhereUniqueInput) {
-    const character = await this.prisma.character.delete({ where });
-    if (!character) {
+  async remove(id: number) {
+    try {
+      return await this.prisma.character.delete({ where: { id } });
+    } catch (e) {
       throw new EntityNotFoundError('This character does not exists.');
     }
-    return character;
   }
 }

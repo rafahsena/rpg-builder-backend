@@ -23,12 +23,12 @@ export class CharactersController {
 
   @Get()
   async findAll() {
-    return this.charactersService.findAll({});
+    return this.charactersService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.charactersService.findOne({ id });
+    return this.charactersService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,11 +36,11 @@ export class CharactersController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCharacterDto: UpdateCharacterDto,
   ) {
-    return this.charactersService.update({ id }, updateCharacterDto);
+    return this.charactersService.update(id, updateCharacterDto);
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
-    return this.charactersService.remove({ id });
+    return this.charactersService.remove(id);
   }
 }
