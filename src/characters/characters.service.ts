@@ -11,21 +11,24 @@ export class CharactersService {
     return this.prisma.character.create({ data });
   }
 
-  async findAll() {
+  async findAll(): Promise<Character[]> {
     return this.prisma.character.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Character> {
     try {
-      return await this.prisma.character.findUnique({ where: { id } });
+      return this.prisma.character.findUnique({ where: { id } });
     } catch (e) {
       throw new EntityNotFoundError('This character does not exists.');
     }
   }
 
-  async update(id: number, data: Prisma.CharacterUpdateInput) {
+  async update(
+    id: number,
+    data: Prisma.CharacterUpdateInput,
+  ): Promise<Character> {
     try {
-      return await this.prisma.character.update({
+      return this.prisma.character.update({
         where: { id },
         data,
       });
@@ -34,9 +37,9 @@ export class CharactersService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<Character> {
     try {
-      return await this.prisma.character.delete({ where: { id } });
+      return this.prisma.character.delete({ where: { id } });
     } catch (e) {
       throw new EntityNotFoundError('This character does not exists.');
     }
